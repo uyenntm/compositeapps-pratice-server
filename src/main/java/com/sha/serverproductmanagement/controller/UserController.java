@@ -2,21 +2,16 @@ package com.sha.serverproductmanagement.controller;
 
 import com.sha.serverproductmanagement.jwt.JwtTokenProvider;
 import com.sha.serverproductmanagement.model.Role;
-import com.sha.serverproductmanagement.model.Transaction;
 import com.sha.serverproductmanagement.model.User;
 import com.sha.serverproductmanagement.service.EmployeeService;
-import com.sha.serverproductmanagement.service.ProductService;
-import com.sha.serverproductmanagement.service.TransactionService;
 import com.sha.serverproductmanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 
 @RestController
 public class UserController {
@@ -28,13 +23,8 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private ProductService productService;
-
-    @Autowired
     private EmployeeService employeeService;
 
-    @Autowired
-    private TransactionService transactionService;
 
     @PostMapping("/api/user/registration")
     public ResponseEntity<?> register(@RequestBody User user){
@@ -61,21 +51,9 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-
-    @PostMapping("/api/user/purchase")
-    public ResponseEntity<?> purchaseProduct(@RequestBody Transaction transaction){
-        transaction.setPurchaseDate(LocalDateTime.now());
-         transactionService.saveTransaction(transaction);
-         return new ResponseEntity<>(transaction, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/api/user/products")
-    public ResponseEntity<?> getAllProducts(){
-        return new ResponseEntity<>(productService.findAllProducts(), HttpStatus.OK);
-    }
-
     @GetMapping("/api/user/employees")
     public ResponseEntity<?> getAllEmployees(){
+        //System.out.println(employeeService.findAllEmployees());
         return new ResponseEntity<>(employeeService.findAllEmployees(), HttpStatus.OK);
     }
 }
