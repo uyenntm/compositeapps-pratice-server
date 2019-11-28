@@ -1,4 +1,4 @@
-# Product-Management
+# Company-Management
 
 This project is a Spring Boot, MySQL, Hibernate and Liquibase project.
 
